@@ -29,11 +29,11 @@ Ejecucion:
 node index.js read/write <spreadsheetId> <range>
 
 - Ejemplo lectura:
-node index.js read "1spqCJ3VRgO9U8n3oC9pEkjufB6DxBdxFS5AL7rvXW-w" "Sheet1!A1:Z1000"
+node index.js read "1spqCeeeeeeeeeeexampleeeeeeeeeeeeexFS5AL7rvXW-w" "Sheet1!A1:Z1000"
 
 MOSTRAR ELEMENTOS OCULTOS AÑADIENDO BOOLEANO AL FINAL
-node index.js read "1spqCJ3VRgO9U8n3oC9pEkjufB6DxBdxFS5AL7rvXW-w" "Sheet1!A1:Z1000" false
+node index.js read "1spqCeeeeeeeeeeexampleeeeeeeeeeeeexFS5AL7rvXW-w" "Sheet1!A1:Z1000" false
 
-node index.js write "1spqCJ3VRgO9U8n3oC9pEkjufB6DxBdxFS5AL7rvXW-w" "Sheet1!A1:B3" "[['TODO','NADA'],['ES','ES'],['MENTIRA','VERDAD']]"
+node index.js write "1spqCeeeeeeeeeeexampleeeeeeeeeeeeexFS5AL7rvXW-w" "Sheet1!A1:B3" "[['TODO','NADA'],['ES','ES'],['MENTIRA','VERDAD']]"
 
 
