@@ -1,39 +1,142 @@
-Ámbito de permisos: En el código auth.js, el ámbito (scope) está configurado para trabajar solo con Google Sheets. Si necesitas más permisos, agrégalos al array scope.
-Mantenimiento: Si tu token expira, se regenerará automáticamente al ejecutar el script.
 
+# Google Sheets API CLI
 
+A Node.js command-line tool to **read and write data to Google Sheets** using a service account.
+
+---
+
+## Features
+
+- Read data from a Google Sheet range
+- Write data to a Google Sheet range
+- Automatic token refresh if expired
+- Scope limited to Google Sheets API access
+- CLI support (`google-sheets-cli`) or direct Node execution (`index.js`)
+
+---
+
+## Installation
+
+```bash
+# Install dependencies
 npm install googleapis
-npm install -g  //Registra scripts (google-sheets-cli) como comando global en el sistema
-                //Para listar comandos globales: npm list -g --depth=0
 
----------------------------------------------
+# (Optional) Install CLI globally
+npm install -g
+# This registers "google-sheets-cli" as a global command
+```
 
-Generar claves de cuenta de servicio, una vez hecho:
-claves -> agregar clave -> JSON 
-y renombramos a service-account.json
+Check global packages:
 
-Darle a compartir a la sheet y compartirla con el mail que sale en client_email en service-account.json
+```bash
+npm list -g --depth=0
+```
 
-----------------------------------------------
--------Nuevo proceso separado:
+---
 
-Start-Process node -ArgumentList "index.js"
+## Setup
 
-Ejecucion:
+### 1. Generate Service Account Keys
+- Go to **Google Cloud Console**.
+- Create a Service Account.
+- Navigate to **Keys > Add Key > JSON**.
+- Download and rename the file as:
+
+```bash
+service-account.json
+```
+
+### 2. Share your Google Sheet
+- Open the target Google Sheet.
+- Share it with the **`client_email`** from your `service-account.json`.
+
+---
+
+##  Authorization Scope
+
+Located in `auth.js`.
+
+```javascript
+const scopes = ['https://www.googleapis.com/auth/spreadsheets'];
+```
+
+- **Default:** Access only to Google Sheets.
+- To add permissions (e.g., Drive access), extend the `scopes` array accordingly.
+
+---
+
+##  Usage
+
+### CLI Mode (Global Command)
+
+```bash
 google-sheets-cli read <spreadsheetId> <range>
+```
 
-----------------------------------------------
--------En el proceso actual:
+### Node.js Mode
 
-Ejecucion: 
-node index.js read/write <spreadsheetId> <range>
+```bash
+node index.js read <spreadsheetId> <range>
+node index.js write <spreadsheetId> <range> <data>
+```
 
-- Ejemplo lectura:
-node index.js read "1spqCeeeeeeeeeeexampleeeeeeeeeeeeexFS5AL7rvXW-w" "Sheet1!A1:Z1000"
+---
 
-MOSTRAR ELEMENTOS OCULTOS AÑADIENDO BOOLEANO AL FINAL
-node index.js read "1spqCeeeeeeeeeeexampleeeeeeeeeeeeexFS5AL7rvXW-w" "Sheet1!A1:Z1000" false
+## Usage Examples
 
-node index.js write "1spqCeeeeeeeeeeexampleeeeeeeeeeeeexFS5AL7rvXW-w" "Sheet1!A1:B3" "[['TODO','NADA'],['ES','ES'],['MENTIRA','VERDAD']]"
+### Read Range
+
+```bash
+node index.js read "1abcExampleSheetId" "Sheet1!A1:C5"
+```
+
+### Read with Hidden Elements Visible
+
+```bash
+node index.js read "1abcExampleSheetId" "Sheet1!A1:C5" false
+```
+
+### Write Static Data
+
+```bash
+node index.js write "1abcExampleSheetId" "Sheet1!A1:B3" "[['Name','Score'],['Alice','95'],['Bob','88']]"
+```
+
+### Write a Formula
+
+```bash
+node index.js write "1abcExampleSheetId" "Sheet1!C1" "[['=SUM(B2:B3)']]"
+```
+
+### Overwrite a Large Range
+
+```bash
+node index.js write "1abcExampleSheetId" "Sheet1!A1:Z50" "[[...]]"
+```
+
+---
+
+## Token Management
+
+- Tokens are automatically refreshed when expired.
+- No manual action required by the user.
+
+---
+
+## Project Structure
+
+```
+.
+├── index.js           # Main script to parse arguments and execute
+├── auth.js            # Authentication and token management
+├── service-account.json # Google Service Account credentials
+└── README.md
+```
+
+---
+
+## License
+
+MIT © Jazmin S.R.
 
 
